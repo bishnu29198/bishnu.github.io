@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Name | Personal Website</title>
+  <meta name="description" content="Personal website demo: portfolio, skills, projects, and contact." />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111b2e;
+      --text:#e8eefc;
+      --muted:#a9b4d0;
+      --brand:#6ea8fe;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 12px 30px rgba(0,0,0,.25);
+      --radius: 18px;
+      --max: 1080px;
+    }
+    [data-theme="light"]{
+      --bg:#f7f8fc;
+      --card:#ffffff;
+      --text:#0b1220;
+      --muted:#4a5568;
+      --brand:#2563eb;
+      --border:rgba(11,18,32,.12);
+      --shadow: 0 12px 30px rgba(11,18,32,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Bengali", sans-serif;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(110,168,254,.18), transparent 60%),
+                  radial-gradient(1000px 500px at 90% 10%, rgba(99,102,241,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* Top bar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,.18);
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="light"] .topbar{ background: rgba(255,255,255,.7); }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:12px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px; font-weight:700;
+      letter-spacing:.2px;
+    }
+    .logo-badge{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), rgba(110,168,254,.35));
+      display:grid; place-items:center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    nav{display:flex; gap:14px; flex-wrap:wrap}
+    .navlink{
+      padding:8px 10px; border-radius:12px;
+      color:var(--muted);
+      border:1px solid transparent;
+    }
+    .navlink.active{
+      color:var(--text);
+      background: rgba(110,168,254,.14);
+      border-color: rgba(110,168,254,.25);
+    }
+    .actions{display:flex; align-items:center; gap:10px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      cursor:pointer;
+      box-shadow: none;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    [data-theme="light"] .btn{ background: rgba(11,18,32,.04); }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(110,168,254,.35); }
+    .btn.primary{
+      background: linear-gradient(135deg, var(--brand), rgba(110,168,254,.45));
+      border-color: rgba(110,168,254,.35);
+      color: white;
+    }
+    .btn.primary:hover{ border-color: rgba(255,255,255,.25); }
+
+    /* Sections */
+    section{padding:56px 0}
+    .grid{display:grid; gap:18px}
+    .hero{
+      padding-top:34px;
+    }
+    .hero-wrap{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 880px){
+      .hero-wrap{grid-template-columns:1fr}
+      nav{display:none} /* keep it simple for demo */
+    }
+    .card{
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    [data-theme="light"] .card{ background: rgba(255,255,255,.9); }
+    .kicker{color:var(--brand); font-weight:700; letter-spacing:.3px; font-size:14px}
+    h1{
+      margin:10px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.12;
+    }
+    p{margin:10px 0; color:var(--muted)}
+    .hero-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .pillrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size: 13px;
+    }
+    [data-theme="light"] .pill{ background: rgba(11,18,32,.03); }
+    .avatar{
+      display:grid; place-items:center;
+      min-height: 100%;
+      text-align:center;
+      background: linear-gradient(180deg, rgba(110,168,254,.18), rgba(255,255,255,.03));
+    }
+    .pfp{
+      width: 110px; height:110px; border-radius: 28px;
+      border:1px solid var(--border);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(255,255,255,.06));
+      display:grid; place-items:center;
+      font-weight:800;
+      font-size: 34px;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+    }
+    .muted{color:var(--muted)}
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+    }
+    @media (max-width: 880px){ .two-col{grid-template-columns:1fr} }
+
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      margin-bottom:14px;
+      gap:12px;
+    }
+    .section-title h2{margin:0; font-size:22px}
+    .section-title span{color:var(--muted); font-size:14px}
+
+    .chips{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size: 13px;
+    }
+    [data-theme="light"] .chip{ background: rgba(11,18,32,.03); }
+
+    .projects{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:18px;
+    }
+    @media (max-width: 980px){ .projects{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 640px){ .projects{grid-template-columns: 1fr;} }
+
+    .proj h3{margin:0 0 6px; font-size:18px}
+    .proj p{margin:0 0 10px}
+    .proj .meta{display:flex; gap:10px; flex-wrap:wrap}
+
+    .timeline{display:grid; gap:12px}
+    .item{
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+    [data-theme="light"] .item{ background: rgba(11,18,32,.03); }
+    .item-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    }
+    .item-title{font-weight:700}
+    .item-time{color:var(--muted); font-size:13px; white-space:nowrap}
+
+    /* Contact */
+    form{display:grid; gap:10px}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+      font: inherit;
+    }
+    [data-theme="light"] input, [data-theme="light"] textarea{ background: rgba(11,18,32,.03); }
+    textarea{min-height:120px; resize:vertical}
+    .footer{
+      padding: 22px 0 30px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 26px;
+    }
+    .footer-inner{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .social{display:flex; gap:10px; flex-wrap:wrap}
+    .link{
+      padding:8px 10px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size: 13px;
+    }
+    [data-theme="light"] .link{ background: rgba(11,18,32,.03); }
+  </style>
+</head>
+
+<body data-theme="dark">
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <a class="logo" href="#home">
+          <div class="logo-badge">YN</div>
+          <div>
+            <div style="font-size:14px; line-height:1.1;">Your Name</div>
+            <div class="muted" style="font-size:12px;">Portfolio</div>
+          </div>
+        </a>
+
+        <nav aria-label="Primary">
+          <a class="navlink" href="#about">About</a>
+          <a class="navlink" href="#skills">Skills</a>
+          <a class="navlink" href="#projects">Projects</a>
+          <a class="navlink" href="#experience">Experience</a>
+          <a class="navlink" href="#contact">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <button id="themeBtn" class="btn" type="button" aria-label="Toggle theme">🌓 Theme</button>
+          <a class="btn primary" href="#contact">Hire / Contact</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="home" class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-wrap">
+        <div class="card">
+          <div class="kicker">Hi, I'm Your Name</div>
+          <h1>আমি [তোমার কাজ/Role] করি।<br/>Simple, clean, কাজের জিনিস বানাই।</h1>
+          <p>
+            এখানে ২-৩ লাইনে তোমার পরিচয়: তুমি কী করো, কাদের জন্য করো, কী ধরনের সমস্যা সলভ করো।
+            যেমন: “I build modern websites and small web apps for businesses.”
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="#contact">Contact Me</a>
+            <a class="btn" href="#" onclick="alert('Demo: এখানে তোমার CV/Resume PDF লিংক দিবে।')">Download Resume</a>
+          </div>
+
+          <div class="pillrow" aria-label="Highlights">
+            <span class="pill">✅ Fast</span>
+            <span class="pill">✅ Responsive</span>
+            <span class="pill">✅ Clean UI</span>
+            <span class="pill">✅ SEO basics</span>
+          </div>
+        </div>
+
+        <div class="card avatar">
+          <div class="pfp" title="Initials">YN</div>
+          <div style="font-weight:800; font-size:18px;">Your Name</div>
+          <div class="muted" style="margin-top:4px;">Web Developer • Designer • Student</div>
+
+          <div class="pillrow" style="justify-content:center;">
+            <span class="pill">📍 Dhaka</span>
+            <span class="pill">📧 you@email.com</span>
+          </div>
+
+          <div class="pillrow" style="justify-content:center;">
+            <span class="pill">GitHub</span>
+            <span class="pill">LinkedIn</span>
+            <span class="pill">Facebook</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-title">
+        <h2>About</h2>
+        <span>কিছু কথা তোমাকে নিয়ে</span>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <p style="margin-top:0;">
+            আমি একজন <b>[Role]</b>। আমি সাধারণত <b>[Tech/Domain]</b> নিয়ে কাজ করি।
+            আমার ফোকাস: দ্রুত, পরিষ্কার, ইউজার-ফ্রেন্ডলি কাজ।
+          </p>
+          <p>
+            এখানে ৩-৫ লাইনে তোমার background, goal, আর কী ধরনের কাজ করতে ভালো লাগে লিখবে।
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="section-title" style="margin:0 0 10px;">
+            <h2 style="font-size:18px;">Quick Info</h2>
+            <span></span>
+          </div>
+          <div class="timeline">
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">বর্তমান কাজ</div>
+                <div class="item-time">2026</div>
+              </div>
+              <div class="muted">Freelance / Student / Job</div>
+            </div>
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">Education</div>
+                <div class="item-time">Year</div>
+              </div>
+              <div class="muted">College/University name</div>
+            </div>
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">Open to</div>
+                <div class="item-time">Now</div>
+              </div>
+              <div class="muted">Internship • Freelance • Full-time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-title">
+        <h2>Skills</h2>
+        <span>যেগুলোতে তুমি ভালো</span>
+      </div>
+      <div class="card">
+        <div class="chips">
+          <span class="chip">HTML</span>
+          <span class="chip">CSS</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">React</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Python</span>
+          <span class="chip">UI Design</span>
+          <span class="chip">Git/GitHub</span>
+          <span class="chip">Figma</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-title">
+        <h2>Projects</h2>
+        <span>কিছু কাজের নমুনা</span>
+      </div>
+
+      <div class="projects">
+        <div class="card proj">
+          <h3>Project One</h3>
+          <p>১-২ লাইনে প্রজেক্টটা কী করে লিখবে।</p>
+          <div class="meta">
+            <span class="chip">React</span>
+            <span class="chip">API</span>
+            <a class="link" href="#" onclick="alert('Demo: এখানে Live link দিবে')">Live</a>
+            <a class="link" href="#" onclick="alert('Demo: এখানে GitHub link দিবে')">Code</a>
+          </div>
+        </div>
+
+        <div class="card proj">
+          <h3>Project Two</h3>
+          <p>১-২ লাইনে প্রজেক্টটা কী করে লিখবে।</p>
+          <div class="meta">
+            <span class="chip">HTML/CSS</span>
+            <span class="chip">Responsive</span>
+            <a class="link" href="#" onclick="alert('Demo: এখানে Live link দিবে')">Live</a>
+            <a class="link" href="#" onclick="alert('Demo: এখানে GitHub link দিবে')">Code</a>
+          </div>
+        </div>
+
+        <div class="card proj">
+          <h3>Project Three</h3>
+          <p>১-২ লাইনে প্রজেক্টটা কী করে লিখবে।</p>
+          <div class="meta">
+            <span class="chip">Python</span>
+            <span class="chip">Automation</span>
+            <a class="link" href="#" onclick="alert('Demo: এখানে Details link দিবে')">Details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-title">
+        <h2>Experience</h2>
+        <span>তোমার কাজ/ইন্টার্ন/অ্যাচিভমেন্ট</span>
+      </div>
+
+      <div class="card">
+        <div class="timeline">
+          <div class="item">
+            <div class="item-top">
+              <div class="item-title">Freelance Web Developer</div>
+              <div class="item-time">2025 - Present</div>
+            </div>
+            <div class="muted">Client work • Landing pages • Small web apps</div>
+          </div>
+          <div class="item">
+            <div class="item-top">
+              <div class="item-title">Intern / Part-time</div>
+              <div class="item-time">2024</div>
+            </div>
+            <div class="muted">Team collaboration • Version control • UI polishing</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <span>কাজ/কথা বলার জন্য</span>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <p style="margin-top:0;">
+            তুমি চাইলে এখানে তোমার WhatsApp, Email, Location, availability লিখতে পারো।
+          </p>
+          <div class="timeline">
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">Email</div>
+                <div class="item-time">Primary</div>
+              </div>
+              <div class="muted">you@email.com</div>
+            </div>
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">Phone</div>
+                <div class="item-time">Optional</div>
+              </div>
+              <div class="muted">+8801XXXXXXXXX</div>
+            </div>
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">Social</div>
+                <div class="item-time">Links</div>
+              </div>
+              <div class="muted">GitHub • LinkedIn • Facebook</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <form id="contactForm">
+            <input name="name" placeholder="Your name" required />
+            <input name="email" type="email" placeholder="Your email" required />
+            <textarea name="message" placeholder="Write your message..." required></textarea>
+            <button class="btn primary" type="submit">Send Message</button>
+            <div id="formMsg" class="muted" style="font-size:13px;"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Your Name. All rights reserved.</div>
+        <div class="social">
+          <a class="link" href="#">GitHub</a>
+          <a class="link" href="#">LinkedIn</a>
+          <a class="link" href="#">Twitter</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    const root = document.body;
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) root.setAttribute('data-theme', savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Active nav highlight on scroll
+    const links = Array.from(document.querySelectorAll('nav .navlink'));
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    function setActiveLink() {
+      const y = window.scrollY + 120;
+      let activeIndex = 0;
+      sections.forEach((sec, i) => {
+        if (sec.offsetTop <= y) activeIndex = i;
+      });
+      links.forEach(l => l.classList.remove('active'));
+      if (links[activeIndex]) links[activeIndex].classList.add('active');
+    }
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+
+    // Demo contact form
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name');
+      formMsg.textContent = `Thanks, ${name}! Demo form only (no email sent).`;
+      form.reset();
+    });
+  </script>
+</body>
+</html>
