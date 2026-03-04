@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Name | Personal Website</title>
-  <meta name="description" content="Personal website demo: portfolio, skills, projects, and contact." />
+  <title id="docTitle">Your Name | Personal Website</title>
+  <meta id="docDesc" name="description" content="Personal website: portfolio, skills, projects, and contact." />
+
+  <!-- Favicon (your round photo) -->
+  <link id="favicon" rel="icon" href="avatar.jpg" />
 
   <style>
     :root{
@@ -59,12 +62,19 @@
       letter-spacing:.2px;
     }
     .logo-badge{
-      width:36px; height:36px; border-radius:12px;
+      width:36px; height:36px; border-radius:999px;
       background: linear-gradient(135deg, var(--brand), rgba(110,168,254,.35));
       display:grid; place-items:center;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      overflow:hidden;
     }
+    .logo-badge img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
     nav{display:flex; gap:14px; flex-wrap:wrap}
     .navlink{
       padding:8px 10px; border-radius:12px;
@@ -101,9 +111,7 @@
     /* Sections */
     section{padding:56px 0}
     .grid{display:grid; gap:18px}
-    .hero{
-      padding-top:34px;
-    }
+    .hero{ padding-top:34px; }
     .hero-wrap{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
@@ -112,7 +120,7 @@
     }
     @media (max-width: 880px){
       .hero-wrap{grid-template-columns:1fr}
-      nav{display:none} /* keep it simple for demo */
+      nav{display:none}
     }
     .card{
       background: rgba(255,255,255,.06);
@@ -148,15 +156,18 @@
       background: linear-gradient(180deg, rgba(110,168,254,.18), rgba(255,255,255,.03));
     }
     .pfp{
-      width: 110px; height:110px; border-radius: 28px;
+      width: 110px; height:110px; border-radius:999px;
       border:1px solid var(--border);
       background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(255,255,255,.06));
       display:grid; place-items:center;
-      font-weight:800;
-      font-size: 34px;
-      color: var(--text);
       box-shadow: var(--shadow);
       margin-bottom: 10px;
+      overflow:hidden;
+    }
+    .pfp img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
     }
     .muted{color:var(--muted)}
     .two-col{
@@ -252,10 +263,12 @@
     <div class="container">
       <div class="topbar-inner">
         <a class="logo" href="#home">
-          <div class="logo-badge">YN</div>
+          <div class="logo-badge" aria-label="Profile photo">
+            <img id="navAvatar" src="avatar.jpg" alt="Profile photo" />
+          </div>
           <div>
-            <div style="font-size:14px; line-height:1.1;">Your Name</div>
-            <div class="muted" style="font-size:12px;">Portfolio</div>
+            <div id="navName" style="font-size:14px; line-height:1.1;">Your Name</div>
+            <div id="navTag" class="muted" style="font-size:12px;">Portfolio</div>
           </div>
         </a>
 
@@ -269,7 +282,7 @@
 
         <div class="actions">
           <button id="themeBtn" class="btn" type="button" aria-label="Toggle theme">🌓 Theme</button>
-          <a class="btn primary" href="#contact">Hire / Contact</a>
+          <a id="contactTopBtn" class="btn primary" href="#contact">Hire / Contact</a>
         </div>
       </div>
     </div>
@@ -280,17 +293,18 @@
     <section class="hero">
       <div class="hero-wrap">
         <div class="card">
-          <div class="kicker">Hi, I'm Your Name</div>
-          <h1>আমি [তোমার কাজ/Role] করি।<br/>Simple, clean, কাজের জিনিস বানাই।</h1>
-          <p>
-            এখানে ২-৩ লাইনে তোমার পরিচয়: তুমি কী করো, কাদের জন্য করো, কী ধরনের সমস্যা সলভ করো।
-            যেমন: “I build modern websites and small web apps for businesses.”
+          <div class="kicker" id="heroKicker">Hi, I'm Your Name</div>
+          <h1 id="heroHeadline">I do [your role].<br/>I build simple, clean, useful things.</h1>
+          <p id="heroBio">
+            Write 2–3 lines about what you do, who you help, and what problems you solve.
+            Example: “I build modern websites and small web apps for businesses.”
           </p>
 
           <div class="hero-cta">
             <a class="btn primary" href="#projects">View Projects</a>
             <a class="btn" href="#contact">Contact Me</a>
-            <a class="btn" href="#" onclick="alert('Demo: এখানে তোমার CV/Resume PDF লিংক দিবে।')">Download Resume</a>
+            <a id="resumeBtn" class="btn" href="#" target="_blank" rel="noopener">Download Resume</a>
+            <a id="chaBtn" class="btn" href="#" target="_blank" rel="noopener">Buy me a Cha ☕</a>
           </div>
 
           <div class="pillrow" aria-label="Highlights">
@@ -302,19 +316,21 @@
         </div>
 
         <div class="card avatar">
-          <div class="pfp" title="Initials">YN</div>
-          <div style="font-weight:800; font-size:18px;">Your Name</div>
-          <div class="muted" style="margin-top:4px;">Web Developer • Designer • Student</div>
+          <div class="pfp" title="Profile photo">
+            <img id="heroAvatar" src="avatar.jpg" alt="Profile photo" />
+          </div>
+          <div id="heroName" style="font-weight:800; font-size:18px;">Your Name</div>
+          <div id="heroRole" class="muted" style="margin-top:4px;">Web Developer • Designer • Student</div>
 
           <div class="pillrow" style="justify-content:center;">
-            <span class="pill">📍 Dhaka</span>
-            <span class="pill">📧 you@email.com</span>
+            <span class="pill" id="pillLocation">📍 Dhaka</span>
+            <span class="pill" id="pillEmail">📧 you@email.com</span>
           </div>
 
-          <div class="pillrow" style="justify-content:center;">
-            <span class="pill">GitHub</span>
-            <span class="pill">LinkedIn</span>
-            <span class="pill">Facebook</span>
+          <div class="pillrow" id="pillSocial" style="justify-content:center;">
+            <a class="pill" id="pillGithub" href="#" target="_blank" rel="noopener">GitHub</a>
+            <a class="pill" id="pillLinkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="pill" id="pillFacebook" href="#" target="_blank" rel="noopener">Facebook</a>
           </div>
         </div>
       </div>
@@ -324,17 +340,17 @@
     <section id="about">
       <div class="section-title">
         <h2>About</h2>
-        <span>কিছু কথা তোমাকে নিয়ে</span>
+        <span>A few lines about me</span>
       </div>
 
       <div class="two-col">
         <div class="card">
-          <p style="margin-top:0;">
-            আমি একজন <b>[Role]</b>। আমি সাধারণত <b>[Tech/Domain]</b> নিয়ে কাজ করি।
-            আমার ফোকাস: দ্রুত, পরিষ্কার, ইউজার-ফ্রেন্ডলি কাজ।
+          <p id="aboutText1" style="margin-top:0;">
+            I’m a <b>[Role]</b>. I usually work with <b>[Tech/Domain]</b>.
+            I focus on clean UI, speed, and a friendly user experience.
           </p>
-          <p>
-            এখানে ৩-৫ লাইনে তোমার background, goal, আর কী ধরনের কাজ করতে ভালো লাগে লিখবে।
+          <p id="aboutText2">
+            Add 3–5 lines about your background, goals, and what you enjoy building.
           </p>
         </div>
 
@@ -343,10 +359,10 @@
             <h2 style="font-size:18px;">Quick Info</h2>
             <span></span>
           </div>
-          <div class="timeline">
+          <div class="timeline" id="quickInfo">
             <div class="item">
               <div class="item-top">
-                <div class="item-title">বর্তমান কাজ</div>
+                <div class="item-title">Current</div>
                 <div class="item-time">2026</div>
               </div>
               <div class="muted">Freelance / Student / Job</div>
@@ -374,10 +390,10 @@
     <section id="skills">
       <div class="section-title">
         <h2>Skills</h2>
-        <span>যেগুলোতে তুমি ভালো</span>
+        <span>What I’m good at</span>
       </div>
       <div class="card">
-        <div class="chips">
+        <div class="chips" id="skillsChips">
           <span class="chip">HTML</span>
           <span class="chip">CSS</span>
           <span class="chip">JavaScript</span>
@@ -395,39 +411,39 @@
     <section id="projects">
       <div class="section-title">
         <h2>Projects</h2>
-        <span>কিছু কাজের নমুনা</span>
+        <span>Some work samples</span>
       </div>
 
-      <div class="projects">
+      <div class="projects" id="projectsGrid">
         <div class="card proj">
           <h3>Project One</h3>
-          <p>১-২ লাইনে প্রজেক্টটা কী করে লিখবে।</p>
+          <p>Write 1–2 lines about what this project does.</p>
           <div class="meta">
             <span class="chip">React</span>
             <span class="chip">API</span>
-            <a class="link" href="#" onclick="alert('Demo: এখানে Live link দিবে')">Live</a>
-            <a class="link" href="#" onclick="alert('Demo: এখানে GitHub link দিবে')">Code</a>
+            <a class="link" href="#" onclick="alert('Demo: add your Live link')">Live</a>
+            <a class="link" href="#" onclick="alert('Demo: add your GitHub link')">Code</a>
           </div>
         </div>
 
         <div class="card proj">
           <h3>Project Two</h3>
-          <p>১-২ লাইনে প্রজেক্টটা কী করে লিখবে।</p>
+          <p>Write 1–2 lines about what this project does.</p>
           <div class="meta">
             <span class="chip">HTML/CSS</span>
             <span class="chip">Responsive</span>
-            <a class="link" href="#" onclick="alert('Demo: এখানে Live link দিবে')">Live</a>
-            <a class="link" href="#" onclick="alert('Demo: এখানে GitHub link দিবে')">Code</a>
+            <a class="link" href="#" onclick="alert('Demo: add your Live link')">Live</a>
+            <a class="link" href="#" onclick="alert('Demo: add your GitHub link')">Code</a>
           </div>
         </div>
 
         <div class="card proj">
           <h3>Project Three</h3>
-          <p>১-২ লাইনে প্রজেক্টটা কী করে লিখবে।</p>
+          <p>Write 1–2 lines about what this project does.</p>
           <div class="meta">
             <span class="chip">Python</span>
             <span class="chip">Automation</span>
-            <a class="link" href="#" onclick="alert('Demo: এখানে Details link দিবে')">Details</a>
+            <a class="link" href="#" onclick="alert('Demo: add details link')">Details</a>
           </div>
         </div>
       </div>
@@ -437,11 +453,11 @@
     <section id="experience">
       <div class="section-title">
         <h2>Experience</h2>
-        <span>তোমার কাজ/ইন্টার্ন/অ্যাচিভমেন্ট</span>
+        <span>Work / internships / achievements</span>
       </div>
 
       <div class="card">
-        <div class="timeline">
+        <div class="timeline" id="expTimeline">
           <div class="item">
             <div class="item-top">
               <div class="item-title">Freelance Web Developer</div>
@@ -464,13 +480,13 @@
     <section id="contact">
       <div class="section-title">
         <h2>Contact</h2>
-        <span>কাজ/কথা বলার জন্য</span>
+        <span>Let’s talk</span>
       </div>
 
       <div class="two-col">
         <div class="card">
-          <p style="margin-top:0;">
-            তুমি চাইলে এখানে তোমার WhatsApp, Email, Location, availability লিখতে পারো।
+          <p id="contactIntro" style="margin-top:0;">
+            You can add your WhatsApp, email, location, and availability here.
           </p>
           <div class="timeline">
             <div class="item">
@@ -478,21 +494,28 @@
                 <div class="item-title">Email</div>
                 <div class="item-time">Primary</div>
               </div>
-              <div class="muted">you@email.com</div>
+              <div class="muted" id="contactEmail">you@email.com</div>
             </div>
             <div class="item">
               <div class="item-top">
                 <div class="item-title">Phone</div>
                 <div class="item-time">Optional</div>
               </div>
-              <div class="muted">+8801XXXXXXXXX</div>
+              <div class="muted" id="contactPhone">+8801XXXXXXXXX</div>
+            </div>
+            <div class="item">
+              <div class="item-top">
+                <div class="item-title">Support</div>
+                <div class="item-time">Buy me a Cha</div>
+              </div>
+              <div class="muted"><a id="contactCha" href="#" target="_blank" rel="noopener">buymeacha.com</a></div>
             </div>
             <div class="item">
               <div class="item-top">
                 <div class="item-title">Social</div>
                 <div class="item-time">Links</div>
               </div>
-              <div class="muted">GitHub • LinkedIn • Facebook</div>
+              <div class="muted" id="contactSocialText">GitHub • LinkedIn • Facebook</div>
             </div>
           </div>
         </div>
@@ -511,27 +534,60 @@
 
     <footer class="footer">
       <div class="footer-inner">
-        <div>© <span id="year"></span> Your Name. All rights reserved.</div>
+        <div>© <span id="year"></span> <span id="footerName">Your Name</span>. All rights reserved.</div>
         <div class="social">
-          <a class="link" href="#">GitHub</a>
-          <a class="link" href="#">LinkedIn</a>
-          <a class="link" href="#">Twitter</a>
+          <a id="footerGithub" class="link" href="#" target="_blank" rel="noopener">GitHub</a>
+          <a id="footerLinkedin" class="link" href="#" target="_blank" rel="noopener">LinkedIn</a>
+          <a id="footerFacebook" class="link" href="#" target="_blank" rel="noopener">Facebook</a>
+          <a id="footerCha" class="link" href="#" target="_blank" rel="noopener">Buy me a Cha ☕</a>
         </div>
       </div>
     </footer>
   </main>
 
   <script>
+    // ========= EDIT ONLY THIS CONFIG =========
+    const CONFIG = {
+      name: "Bishnu",                  // <-- change to your full name
+      tagline: "Portfolio",
+      roleLine: "Web Developer • Designer • Student",
+      location: "Dhaka",
+      email: "you@email.com",
+      phone: "+8801XXXXXXXXX",
+      avatarUrl: "avatar.jpg",         // <-- put your round image file next to this HTML
+      resumeUrl: "#",                  // <-- put your CV PDF link here
+
+      // Support link (your link)
+      buyMeAChaUrl: "https://buymeacha.com/bishnu",
+
+      // Social profiles (fill these)
+      social: {
+        github: "#",
+        linkedin: "#",
+        facebook: "https://www.facebook.com/947821735085293" // found on web; replace if wrong
+      },
+
+      hero: {
+        kicker: "Hi, I'm Bishnu",
+        headline: "I do [your role].<br/>I build simple, clean, useful things.",
+        bio: "Write 2–3 lines about what you do, who you help, and what problems you solve."
+      },
+
+      about: {
+        p1: "I’m a <b>[Role]</b>. I usually work with <b>[Tech/Domain]</b>. I focus on clean UI, speed, and a friendly user experience.",
+        p2: "Add 3–5 lines about your background, goals, and what you enjoy building."
+      }
+    };
+    // ========= END CONFIG =========
+
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Theme toggle
     const themeBtn = document.getElementById('themeBtn');
     const root = document.body;
-
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) root.setAttribute('data-theme', savedTheme);
-
     themeBtn.addEventListener('click', () => {
       const current = root.getAttribute('data-theme') || 'dark';
       const next = current === 'dark' ? 'light' : 'dark';
@@ -539,18 +595,66 @@
       localStorage.setItem('theme', next);
     });
 
+    // Apply CONFIG -> DOM
+    function setText(id, value){ const el = document.getElementById(id); if(el) el.textContent = value; }
+    function setHTML(id, value){ const el = document.getElementById(id); if(el) el.innerHTML = value; }
+    function setHref(id, value){ const el = document.getElementById(id); if(el) el.href = value; }
+    function setSrc(id, value){ const el = document.getElementById(id); if(el) el.src = value; }
+
+    // Title + meta
+    document.getElementById("docTitle").textContent = `${CONFIG.name} | Personal Website`;
+    document.getElementById("docDesc").setAttribute("content", `${CONFIG.name}'s personal website: portfolio, skills, projects, and contact.`);
+    document.getElementById("favicon").setAttribute("href", CONFIG.avatarUrl);
+
+    // Nav
+    setText("navName", CONFIG.name);
+    setText("navTag", CONFIG.tagline);
+    setSrc("navAvatar", CONFIG.avatarUrl);
+
+    // Hero left
+    setText("heroKicker", CONFIG.hero.kicker);
+    setHTML("heroHeadline", CONFIG.hero.headline);
+    setText("heroBio", CONFIG.hero.bio);
+
+    // Hero right
+    setSrc("heroAvatar", CONFIG.avatarUrl);
+    setText("heroName", CONFIG.name);
+    setText("heroRole", CONFIG.roleLine);
+    setText("pillLocation", `📍 ${CONFIG.location}`);
+    setText("pillEmail", `📧 ${CONFIG.email}`);
+
+    // Buttons/links
+    setHref("resumeBtn", CONFIG.resumeUrl);
+    setHref("chaBtn", CONFIG.buyMeAChaUrl);
+
+    setHref("pillGithub", CONFIG.social.github);
+    setHref("pillLinkedin", CONFIG.social.linkedin);
+    setHref("pillFacebook", CONFIG.social.facebook);
+
+    // About
+    setHTML("aboutText1", CONFIG.about.p1);
+    setText("aboutText2", CONFIG.about.p2);
+
+    // Contact
+    setText("contactEmail", CONFIG.email);
+    setText("contactPhone", CONFIG.phone);
+    setHref("contactCha", CONFIG.buyMeAChaUrl);
+    document.getElementById("contactCha").textContent = CONFIG.buyMeAChaUrl;
+
+    // Footer
+    setText("footerName", CONFIG.name);
+    setHref("footerGithub", CONFIG.social.github);
+    setHref("footerLinkedin", CONFIG.social.linkedin);
+    setHref("footerFacebook", CONFIG.social.facebook);
+    setHref("footerCha", CONFIG.buyMeAChaUrl);
+
     // Active nav highlight on scroll
     const links = Array.from(document.querySelectorAll('nav .navlink'));
-    const sections = links
-      .map(a => document.querySelector(a.getAttribute('href')))
-      .filter(Boolean);
-
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
     function setActiveLink() {
       const y = window.scrollY + 120;
       let activeIndex = 0;
-      sections.forEach((sec, i) => {
-        if (sec.offsetTop <= y) activeIndex = i;
-      });
+      sections.forEach((sec, i) => { if (sec.offsetTop <= y) activeIndex = i; });
       links.forEach(l => l.classList.remove('active'));
       if (links[activeIndex]) links[activeIndex].classList.add('active');
     }
@@ -560,7 +664,6 @@
     // Demo contact form
     const form = document.getElementById('contactForm');
     const formMsg = document.getElementById('formMsg');
-
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const data = new FormData(form);
